@@ -1,0 +1,111 @@
+id: ipfs
+title: "IPFS"
+version: 0.12.0
+release-notes: "Upgrade to EmbassyOS v0.3.0"
+license: mit
+wrapper-repo: "https://github.com/Start9Labs/ipfs-wrapper"
+upstream-repo: "https://github.com/Start9Labs/ipfs-wrapper"
+support-site: "https://docs.start9.com/"
+marketing-site: "https://start9.com/"
+build: ["make"]
+description:
+  short: InterPlanetary File System
+  long: A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open.
+assets:
+  license: LICENSE
+  icon: icon.png
+  instructions: instructions.md
+  docker-images: image.tar
+main:
+  type: docker
+  image: main
+  entrypoint: "docker_entrypoint.sh"
+  args: []
+  # entrypoint: "/sbin/tini"
+  # args: ["--", "/usr/local/bin/start_ipfs", "daemon", "--migrate=true", "--agent-version-suffix=docker"]
+  mounts:
+    main: /data/ipfs
+health-checks:
+  main:
+    name: Web Interface
+    success-message: The ipfs UI is accessible
+    type: docker
+    image: main
+    entrypoint: "check-web.sh"
+    args: []
+    inject: true
+    system: false
+    io-format: json
+volumes:
+  main:
+    type: data
+interfaces:
+  main:
+    name: Web UI
+    description: An interactive portal into your IPFS node
+    tor-config:
+      port-mapping:
+        80: "5001"
+    lan-config:
+      443:
+        ssl: true
+        internal: 5001
+    ui: true
+    protocols:
+      - tcp
+      - http
+  gateway:
+    name: IPFS Gateway
+    description: A browser for IPFS content
+    tor-config:
+      port-mapping:
+        80: "8080"
+    lan-config:
+      443:
+        ssl: true
+        internal: 8080
+    ui: true
+    protocols:
+      - tcp
+      - http
+config:
+  get:
+    type: script
+  set:
+    type: script
+backup:
+  create:
+    type: docker
+    image: compat
+    system: true
+    entrypoint: compat
+    args:
+      - duplicity
+      - create
+      - /mnt/backup
+      - /data/ipfs/data
+    mounts:
+      BACKUP: "/mnt/backup"
+      main: "/data/ipfs/data"
+  restore:
+    type: docker
+    image: compat
+    system: true
+    entrypoint: compat
+    args:
+      - duplicity
+      - restore
+      - /data/ipfs/data
+      - /mnt/backup
+    mounts:
+      BACKUP: "/mnt/backup"
+      main: "/data/ipfs/data"
+migrations:
+  from:
+    "*":
+      type: script
+      args: ["from"]
+  to:
+    "*":
+      type: script
+      args: ["to"]
