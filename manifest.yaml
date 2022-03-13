@@ -68,7 +68,7 @@ backup:
       - /mnt/backup
       - /data/ipfs/data
     mounts:
-      BACKUP: "/mnt/backup"
+      BACKUP: "/mnt/backup"  
       main: "/data/ipfs/data"
   restore:
     type: docker

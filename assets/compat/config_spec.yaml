@@ -6,7 +6,7 @@
 #   description: The Tor address for the network interface. 
 #   type: pointer
 #   subtype: package
-#   package-id: hello-world
+#   package-id: ipfs
 #   target: tor-address
 #   interface: main
 
