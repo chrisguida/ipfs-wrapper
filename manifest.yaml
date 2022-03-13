@@ -1,4 +1,4 @@
-id: ipfs 
+id: ipfs
 title: "IPFS"
 version: 0.12.0
 release-notes: "Upgrade to EmbassyOS v0.3.0"
@@ -9,9 +9,8 @@ support-site: "https://docs.start9.com/"
 marketing-site: "https://start9.com/"
 build: ["make"]
 description:
-  short: Example service
-  long: |
-    Hello World is a simple example of a service wrapper that launches a web interface to say hello and nothing more.
+  short: InterPlanetary File System
+  long: A peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open.
 assets:
   license: LICENSE
   icon: icon.png
@@ -41,7 +40,7 @@ volumes:
   main:
     type: data
   compat:
-    type: assets 
+    type: assets
 interfaces:
   main:
     name: Web UI
@@ -61,15 +60,15 @@ backup:
   create:
     type: docker
     image: compat
-    system: true 
-    entrypoint: compat 
-    args: 
+    system: true
+    entrypoint: compat
+    args:
       - duplicity
       - create
       - /mnt/backup
       - /data/ipfs/data
     mounts:
-      BACKUP: "/mnt/backup" 
+      BACKUP: "/mnt/backup"
       main: "/data/ipfs/data"
   restore:
     type: docker
