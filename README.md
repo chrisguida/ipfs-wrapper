@@ -1,6 +1,6 @@
-# Wrapper for hello-world
+# Wrapper for ipfs
 
-`hello-world` is a simple, minimal project to serve as a template for creating an app for the Embassy.
+IPFS is a peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge by making the web upgradeable, resilient, and more open.
 
 ## Dependencies
 
@@ -56,16 +56,14 @@ cd embassy-os/backend/
 
 ## Cloning
 
-Clone the project locally. Note the submodule link to the original project(s). 
+Clone the project locally. Note the submodule link to the original project(s).
 
 ```
-git clone https://github.com/Start9Labs/hello-world-wrapper.git
-cd hello-world-wrapper
+git clone https://github.com/Start9Labs/ipfs-wrapper.git
+cd ipfs-wrapper
+git submodule update --init --recursive
 ```
-During the 0.3.0 beta (you won't need this after merge to main), run:  
-```
-git checkout integration/0.3.0
-```
+
 ## Building
 
 To build the project, run the following commands:
@@ -83,7 +81,7 @@ Run the following command to install the package:
 ```
 embassy-cli auth login
 #Enter your embassy password then run:
-embassy-cli package install /path/to/hello-world.s9pk
+embassy-cli package install /path/to/ipfs.s9pk
 ```
 ## Verify Install
 
