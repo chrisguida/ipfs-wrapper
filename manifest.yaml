@@ -39,8 +39,6 @@ health-checks:
 volumes:
   main:
     type: data
-  compat:
-    type: assets
 interfaces:
   main:
     name: Web UI
@@ -56,6 +54,11 @@ interfaces:
     protocols:
       - tcp
       - http
+config:
+  get:
+    type: script
+  set:
+    type: script
 backup:
   create:
     type: docker
@@ -83,3 +86,12 @@ backup:
     mounts:
       BACKUP: "/mnt/backup"
       main: "/data/ipfs/data"
+migrations:
+  from:
+    "*":
+      type: script
+      args: ["from"]
+  to:
+    "*":
+      type: script
+      args: ["to"]

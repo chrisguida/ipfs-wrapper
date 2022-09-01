@@ -51,6 +51,8 @@ RUN set -eux; \
 FROM debian:buster-slim
 LABEL maintainer="Steven Allen <steven@stebalien.com>"
 
+RUN apt update && apt install -y curl wget
+
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
 ENV SRC_DIR /go-ipfs
 COPY --from=0 $SRC_DIR/cmd/ipfs/ipfs /usr/local/bin/ipfs
@@ -94,6 +96,9 @@ RUN mkdir -p $IPFS_PATH \
 # Create mount points for `ipfs mount` command
 RUN mkdir /ipfs /ipns \
   && chown ipfs:users /ipfs /ipns
+
+RUN wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_arm.tar.gz -O - |\
+    tar xz && mv yq_linux_arm /usr/bin/yq
 
 # Expose the fs-repo as a volume.
 # start_ipfs initializes an fs-repo if none is mounted.
