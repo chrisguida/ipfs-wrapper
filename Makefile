@@ -22,7 +22,7 @@ clean:
 ipfs.s9pk: manifest.yaml image.tar instructions.md scripts/embassy.js
 	embassy-sdk pack
 
-image.tar: Dockerfile docker_entrypoint.sh check-web.sh
+image.tar: Dockerfile docker_entrypoint.sh check-web.sh nginx.conf
 	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --tag start9/ipfs/main:$(VERSION) --platform=linux/arm64 -o type=docker,dest=image.tar .
 
 scripts/embassy.js: $(TS_FILES)

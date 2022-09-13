@@ -1,11 +1,22 @@
 #!/bin/sh
 
-set -e
+set -ea
+
+_term() {
+  echo "Caught SIGTERM signal!"
+  kill -TERM "$nginx_child" 2>/dev/null
+  kill -TERM "$ipfs_child" 2>/dev/null
+}
 
 user=ipfs
 repo="$IPFS_PATH"
 
 if [ `id -u` -eq 0 ]; then
+  # start nginx while we're still root
+  echo "starting nginx as user: $(whoami)"
+  nginx -g 'daemon off;' &
+  nginx_child=$!
+
   echo "Changing user to $user"
   # ensure folder is writable
   su-exec "$user" test -w "$repo" || chown -R -- "$user" "$repo"
@@ -41,11 +52,18 @@ if ! [ -f /data/ipfs/config ]; then
 fi
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "$ACAO"
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST"]'
-ipfs config --json Addresses.API '"/ip4/0.0.0.0/tcp/5001"'
-ipfs config --json Addresses.Gateway '"/ip4/0.0.0.0/tcp/8080"'
+# ipfs config --json Addresses.API '"/ip4/0.0.0.0/tcp/5001"'
+# ipfs config --json Addresses.Gateway '"/ip4/0.0.0.0/tcp/8080"'
 # ipfs config --json Gateway.PublicGateways "$PUBLIC_GATEWAYS"
 ipfs config --bool Experimental.Libp2pStreamMounting true
 ipfs config --bool Swarm.RelayClient.Enabled true
 ipfs config --bool Transports.Network.Relay true
 
-exec /sbin/tini -- /usr/local/bin/start_ipfs daemon --migrate=true --agent-version-suffix=docker
+/usr/local/bin/start_ipfs daemon --migrate=true --agent-version-suffix=docker &
+ipfs_child=$!
+
+trap _term TERM
+
+echo "All processes started"
+
+wait $nginx_child $ipfs_child

@@ -51,7 +51,7 @@ RUN set -eux; \
 FROM debian:buster-slim
 LABEL maintainer="Steven Allen <steven@stebalien.com>"
 
-RUN apt update && apt install -y curl wget
+RUN apt update && apt install -y curl nginx wget
 
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
 ENV SRC_DIR /go-ipfs
@@ -111,6 +111,8 @@ ENV IPFS_LOGGING ""
 ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 ADD check-web.sh /usr/local/bin/check-web.sh
 RUN chmod +x /usr/local/bin/*.sh
+
+ADD nginx.conf /etc/nginx/sites-available/default
 
 # This just makes sure that:
 # 1. There's an fs-repo, and initializes one if there isn't.

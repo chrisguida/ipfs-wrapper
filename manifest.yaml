@@ -45,11 +45,11 @@ interfaces:
     description: An interactive portal into your IPFS node
     tor-config:
       port-mapping:
-        80: "5001"
+        80: "5002"
     lan-config:
       443:
         ssl: true
-        internal: 5001
+        internal: 5002
     ui: true
     protocols:
       - tcp
