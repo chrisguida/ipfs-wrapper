@@ -26,15 +26,15 @@ HTTP="http://"
 HTTPS="https://"
 
 ACAO="[\"$HTTP$TOR_ADDRESS\",\"$HTTPS$LAN_ADDRESS\",\"$HTTP$LOCALHOST_ADDRESS\",\"$HTTP$LOCALHOST_ADDRESS_2\",\"$HTTPS$WEBUI_HOSTED_ADDRESS\",\"$HTTP$EMBASSY_ADDRESS\",\"$HTTP$GW_TOR_ADDRESS\",\"$HTTPS$GW_LAN_ADDRESS\",\"$HTTPS$FILE_DOWNLOAD_ADDRESS\"]"
-# PUBLIC_GATEWAYS="    {
-#     \"$GW_TOR_ADDRESS\": {
-#     \"Paths\": [\"/ipfs\", \"/ipns\"]
-#     },
-#     \"$GW_LAN_ADDRESS\": {
-#     \"Paths\": [\"/ipfs\", \"/ipns\"]
-#     },
-#     \"localhost\": null
-# }"
+PUBLIC_GATEWAYS="    {
+    \"$GW_TOR_ADDRESS\": {
+    \"Paths\": [\"/ipfs\", \"/ipns\"]
+    },
+    \"$GW_LAN_ADDRESS\": {
+    \"Paths\": [\"/ipfs\", \"/ipns\"]
+    },
+    \"localhost\": null
+}"
 
 if ! [ -f /data/ipfs/config ]; then
   echo "Config not found, initizalizing..."
@@ -49,8 +49,8 @@ ipfs config --json Addresses.Gateway '"/ip4/0.0.0.0/tcp/8080"'
 # ipfs config --json Addresses.Gateway '["/ip4/172.18.0.1/tcp/8080", "/ip4/0.0.0.0/tcp/8080"]'
 # ipfs config --json Addresses.Gateway '"/ip4/172.18.0.1/tcp/8080"'
 # ipfs config --json Addresses.Gateway '["/dns4/ipfs.embassy/tcp/8080", "/ip4/0.0.0.0/tcp/8080"]'
-# ipfs config --json Gateway.PublicGateways "$PUBLIC_GATEWAYS"
-ipfs config --json Gateway.PublicGateways null
+ipfs config --json Gateway.PublicGateways "$PUBLIC_GATEWAYS"
+# ipfs config --json Gateway.PublicGateways null
 ipfs config --bool Experimental.Libp2pStreamMounting true
 ipfs config --bool Swarm.RelayClient.Enabled true
 ipfs config --bool Transports.Network.Relay true

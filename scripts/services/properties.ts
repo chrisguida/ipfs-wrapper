@@ -8,11 +8,11 @@ const noPropertiesFound: T.ResultType<T.Properties> = {
     data: {
       "Not Ready": {
         type: "string",
-        value: "Could not find properties. The service might still be starting",
+        value: "Could not find properties. IPFS might still be starting...",
         qr: false,
         copyable: false,
         masked: false,
-        description: "Fallback Message When Properties could not be found",
+        description: "Properties could not be found",
       },
     },
   },
@@ -20,6 +20,7 @@ const noPropertiesFound: T.ResultType<T.Properties> = {
 
 const configMatcher = shape({
   "tor-address": string,
+  "lan-address": string,
 });
 
 export const properties: T.ExpectedExports.properties = async ( effects: T.Effects ) => {
@@ -41,18 +42,18 @@ export const properties: T.ExpectedExports.properties = async ( effects: T.Effec
     result: {
       version: 2,
       data: {
-        "SSH/Tor Git Remote URL": {
+        "IPFS WebUI (Tor)": {
           type: "string",
-          value: `git@${config["tor-address"]}`,
-          description: "Run <code>git remote add &lt;remote alias> &lt;this URL></code> to add your repo's SSH/Tor URL as a remote. See instructions for setup.",
+          value: `http://${config["tor-address"]}/webui`,
+          description: "Use this link to access IPFS's WebUI over Tor.",
           copyable: true,
           qr: false,
           masked: false,
         },
-        "HTTP/Tor Git Remote URL": {
+        "IPFS WebUI (Lan)": {
           type: "string",
-          value: `http://${config["tor-address"]}`,
-          description: "Run <code>git remote add &lt;remote alias> &lt;this URL></code> to add your repo's SSH/Tor URL as a remote. See instructions for setup.",
+          value: `https://${config["lan-address"]}/webui`,
+          description: "Use this link to enter IPFS's WebUI over Lan.",
           copyable: true,
           qr: false,
           masked: false,

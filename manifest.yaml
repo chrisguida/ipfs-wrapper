@@ -50,7 +50,7 @@ interfaces:
       443:
         ssl: true
         internal: 5001
-    ui: true
+    ui: false
     protocols:
       - tcp
       - http
@@ -73,6 +73,8 @@ config:
     type: script
   set:
     type: script
+properties:
+  type: script
 backup:
   create:
     type: docker
