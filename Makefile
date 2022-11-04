@@ -1,7 +1,6 @@
-ASSETS := $(shell yq e '.assets.[].src' manifest.yaml)
-VERSION := $(shell yq e ".version" manifest.yaml)
 IPFS_SRC := $(shell find ./go-ipfs)
-S9PK_PATH=$(shell find . -name ipfs.s9pk -print)
+PKG_VERSION := $(shell yq e ".version" manifest.yaml)
+PKG_ID := $(shell yq e ".id" manifest.yaml)
 TS_FILES := $(shell find . -name \*.ts )
 
 # delete the target of a rule if it has changed and its recipe exits with a nonzero exit status
@@ -9,21 +8,29 @@ TS_FILES := $(shell find . -name \*.ts )
 
 all: verify
 
+clean:
+	rm -rf docker-images
+	rm -f  $(PKG_ID).s9pk
+	rm -f image.tar
+	rm -f scripts/*.js
+
 install: all
 	embassy-cli package install ipfs.s9pk
 
-verify: ipfs.s9pk $(S9PK_PATH)
-	embassy-sdk verify s9pk $(S9PK_PATH)
+verify: $(PKG_ID).s9pk
+	embassy-sdk verify s9pk $(PKG_ID).s9pk
 
-clean:
-	rm -f image.tar
-	rm -f ipfs.s9pk
-
-ipfs.s9pk: manifest.yaml image.tar instructions.md scripts/embassy.js
+$(PKG_ID).s9pk: manifest.yaml instructions.md scripts/embassy.js LICENSE docker-images/aarch64.tar docker-images/x86_64.tar
+	if ! [ -z "$(ARCH)" ]; then cp docker-images/$(ARCH).tar image.tar; fi
 	embassy-sdk pack
 
-image.tar: Dockerfile docker_entrypoint.sh check-web.sh
-	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --tag start9/ipfs/main:$(VERSION) --platform=linux/arm64 -o type=docker,dest=image.tar .
+docker-images/aarch64.tar: Dockerfile docker_entrypoint.sh check-web.sh $(IPFS_SRC)
+	mkdir -p docker-images
+	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --build-arg ARCH=aarch64 --build-arg PLATFORM=arm64 --platform=linux/arm64 -o type=docker,dest=docker-images/aarch64.tar .
+
+docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh check-web.sh $(IPFS_SRC)
+	mkdir -p docker-images
+	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --build-arg ARCH=x86_64 --build-arg PLATFORM=amd64 --platform=linux/amd64 -o type=docker,dest=docker-images/x86_64.tar .
 
 scripts/embassy.js: $(TS_FILES)
 	deno bundle scripts/embassy.ts scripts/embassy.js
