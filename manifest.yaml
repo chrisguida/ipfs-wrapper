@@ -88,8 +88,8 @@ backup:
     args:
       - duplicity
       - restore
-      - /data/ipfs/data
       - /mnt/backup
+      - /data/ipfs/data
     mounts:
       BACKUP: "/mnt/backup"
       main: "/data/ipfs/data"
