@@ -3,10 +3,10 @@ title: "IPFS"
 version: 0.15.0
 release-notes: "Initial release for EmbassyOS"
 license: mit
-wrapper-repo: "https://github.com/Start9Labs/ipfs-wrapper"
-upstream-repo: "https://github.com/Start9Labs/ipfs-wrapper"
-support-site: "https://docs.start9.com/"
-marketing-site: "https://start9.com/"
+wrapper-repo: "https://github.com/chrisguida/ipfs-wrapper"
+upstream-repo: "https://github.com/ipfs/go-ipfs"
+support-site: "https://community.start9.com/"
+marketing-site: "https://ipfs.tech/"
 build: ["make"]
 description:
   short: InterPlanetary File System

@@ -97,9 +97,6 @@ RUN mkdir -p $IPFS_PATH \
 RUN mkdir /ipfs /ipns \
   && chown ipfs:users /ipfs /ipns
 
-# RUN wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_arm.tar.gz -O - |\
-#     tar xz && mv yq_linux_arm /usr/bin/yq
-
 ARG PLATFORM
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
