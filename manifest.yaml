@@ -50,7 +50,7 @@ volumes:
     type: data
 interfaces:
   main:
-    name: Web UI
+    name: API Address
     description: An interactive portal into your IPFS node. Must append "/webui" to access in a browser. See the Properties section for the copyable URL.
     tor-config:
       port-mapping:
