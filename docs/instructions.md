@@ -12,9 +12,8 @@ in the steps below.
 
 For setup, you need to access your node via LAN (`.local` address). If you have
 not already,
-[please set up LAN access](https://start9.com/latest/user-manual/connecting/connecting-lan/lan-os/index)
-for your client device and
-[browser](https://start9.com/latest/user-manual/connecting/connecting-lan/lan-browser/index).
+[please set up LAN access](https://start9.com/latest/user-manual/connecting/connecting-lan/)
+for your client device and browser.
 
 1. After install, click "Configure," and then click "Save," as this service has
    no needed configurations at this time.
@@ -30,7 +29,7 @@ extension.
 
 1. Install the Companion to your browser using the link above and selecting your
    browser (Firefox or Chrome-based). You can click through any pop-up warnings.
-2. Once installed, click on the extension's icon in your browser toolbar . It
+2. Once installed, click on the extension's icon in your browser toolbar. It
    will look like a gray cube. Then click the gear icon to enter the Settings.
 
 <!-- MD_PACKER_INLINE BEGIN -->
@@ -39,15 +38,9 @@ extension.
 
 <!-- MD_PACKER_INLINE END -->
 
-- On the resulting page, scroll to the second section, and under API > IPFS API
-  URL, add your API LAN address from your Embassy UI's IPFS service page
-  > Interfaces > API (copy icon). You will replace everything on that line and
-  > your address will begin with `https://`. No port is needed
-
-- Under Gateways > Default Public Gateway, you will add your IPFS Gateway LAN
-  address from the "Interfaces" section of your IPFS service page.
-- Finally, uncheck the option for "Use Local Gateway." The result will be as
-  below:
+3. Under API > edit the IPFS API URL to be your API LAN address. You can find this value in your Embassy IPFS Service inside the "Interfaces" page. **Note**: no port is needed.
+4. Under Gateways > edit *both* Default Public Gateway *and* Local Gateway to be your Gateway LAN. This address is also inside the "Interfaces" page.
+5. Uncheck the option for "Use Local Gateway".
 
 <!-- MD_PACKER_INLINE BEGIN -->
 
@@ -55,8 +48,7 @@ extension.
 
 <!-- MD_PACKER_INLINE END -->
 
-3. Next, go back to the Companion Extension and click "My Node" to enter your
-   IPFS WebUI.
+6. Go back to the Companion Extension and click "My Node".
 
 <!-- MD_PACKER_INLINE BEGIN -->
 
@@ -64,9 +56,9 @@ extension.
 
 <!-- MD_PACKER_INLINE END -->
 
-- Click "Settings" on the bottom of the left-hand menu.
+7. Click "Settings" on the bottom of the left-hand menu.
 
-- Similar to above, copy-paste in the API and Gateway LAN addresses from your
+8. Similar to above, copy-paste in the API and Gateway LAN addresses from your
   Embassy's IPFS Service Interfaces page into the appropriate fields.
 
 <!-- MD_PACKER_INLINE BEGIN -->
@@ -75,49 +67,11 @@ extension.
 
 <!-- MD_PACKER_INLINE END -->
 
-4. That's it! You will notice that your browser extension has turned teal in
+9. That's it! You will notice that your browser extension has turned teal in
    color, and is displaying a number of connected peers. Click "Status" at the
    top of the left-hand menu for details on your node.
 
 ## Basic Use
-
-### Add a Peer
-
-1. Click "Peers" in the left-hand menu.
-
-<!-- MD_PACKER_INLINE BEGIN -->
-
-![Add Connection](./assets/img/ipfs-add-peer0.png)
-
-<!-- MD_PACKER_INLINE END -->
-
-2. Click "Add Connection" in the top left
-
-<!-- MD_PACKER_INLINE BEGIN -->
-
-![Bootstrap Address](./assets/img/ipfs-add-peer1.png)
-
-<!-- MD_PACKER_INLINE END -->
-
-3. In the resulting window, you can add your Peer if you have its full location,
-   or if you only have the peer id, copy paste a bootstrap node address and
-   delete the peer id from the end (everything after `/p2p/`).
-
-<!-- MD_PACKER_INLINE BEGIN -->
-
-![Adding a Peer via Bootstrap](./assets/img/ipfs-add-peer2.png)
-
-<!-- MD_PACKER_INLINE END -->
-
-4. Finally, paste in the Peer ID and hit "Add"
-
-<!-- MD_PACKER_INLINE BEGIN -->
-
-![Add Peer ID](./assets/img/ipfs-add-peer3.png)
-
-<!-- MD_PACKER_INLINE END -->
-
-5. You will get a success message at the very bottom of the page as shown above.
 
 ### Add and Pin a File
 
@@ -170,11 +124,50 @@ extension.
 
 <!-- MD_PACKER_INLINE END -->
 
-2. If not previewed, click "public gateway," and you will be taken to the file
-   on the IPFS network!
+2. If not previewed, click "public gateway". Don't worry, because of our initial settings, the "public gateway" in this case is actually your Embassy.
 
 <!-- MD_PACKER_INLINE BEGIN -->
 
 ![Search](./assets/img/ipfs-search1.png)
 
 <!-- MD_PACKER_INLINE END -->
+
+### Add a Peer
+
+In certain cases, you may want to manually add a peer, like another Embassy user!
+
+1. Click "Peers" in the left-hand menu.
+
+<!-- MD_PACKER_INLINE BEGIN -->
+
+![Add Connection](./assets/img/ipfs-add-peer0.png)
+
+<!-- MD_PACKER_INLINE END -->
+
+2. Click "Add Connection" in the top left
+
+<!-- MD_PACKER_INLINE BEGIN -->
+
+![Bootstrap Address](./assets/img/ipfs-add-peer1.png)
+
+<!-- MD_PACKER_INLINE END -->
+
+3. In the resulting window, you can add your Peer if you have its full location,
+   or if you only have the peer id, copy paste a bootstrap node address and
+   delete the peer id from the end (everything after `/p2p/`).
+
+<!-- MD_PACKER_INLINE BEGIN -->
+
+![Adding a Peer via Bootstrap](./assets/img/ipfs-add-peer2.png)
+
+<!-- MD_PACKER_INLINE END -->
+
+4. Finally, paste in the Peer ID and hit "Add"
+
+<!-- MD_PACKER_INLINE BEGIN -->
+
+![Add Peer ID](./assets/img/ipfs-add-peer3.png)
+
+<!-- MD_PACKER_INLINE END -->
+
+5. You will get a success message at the very bottom of the page as shown above.
