@@ -1,3 +1,4 @@
+DOC_ASSETS := $(shell find ./docs/assets)
 IPFS_SRC := $(shell find ./go-ipfs)
 PKG_VERSION := $(shell yq e ".version" manifest.yaml)
 PKG_ID := $(shell yq e ".id" manifest.yaml)
@@ -33,3 +34,6 @@ docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh check-web.sh $(IPFS_SR
 
 scripts/embassy.js: $(TS_FILES)
 	deno bundle scripts/embassy.ts scripts/embassy.js
+
+instructions.md: docs/instructions.md $(DOC_ASSETS)
+	cd docs && md-packer < instructions.md > ../instructions.md
